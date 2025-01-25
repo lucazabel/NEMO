@@ -13,6 +13,23 @@ path_FIT = "datasets/FIT/coords/FIT0_calc_coords.csv"
 path_RIPE_ATLAS = "datasets/RIPEAtlas/19062023/RIPEAtlas_coords.csv"
 path_RIPE_ATLAS_RTT = "datasets/RIPEAtlas/19062023/matrix_cleaned.csv"
 
+path_FIT_COORDS_3D = "datasets/RIPEAtlas/19062023/coords_energy_3d.csv"
+path_FIT_COORDS_2D = "datasets/RIPEAtlas/19062023/coords_energy_2d.csv"
+path_FIT_ENERGY = "datasets/RIPEAtlas/19062023/energy_consumption_header.csv"
+
+
+path_ENERGY_COORDS_tp2_classic = "datasets/ENERGY/coords/classic/coords_tp2_mW_classic.csv"
+path_ENERGY_COORDS_tp2_gateway_classic = "datasets/ENERGY/coords/classic/coords_tp2_mW_gate_rec_classic.csv"
+path_ENERGY_COORDS_tp2_receiver_classic = "datasets/ENERGY/coords/classic/coords_tp2_mW_rec_classic.csv"
+
+path_ENERGY_COORDS_tp2_height = "datasets/ENERGY/coords/height/coords_tp2_mW_height.csv"
+path_ENERGY_COORDS_tp2_gateway_height = "datasets/ENERGY/coords/height/coords_tp2_mW_gate_rec_height.csv"
+path_ENERGY_COORDS_tp2_receiver_height = "datasets/ENERGY/coords/height/coords_tp2_mW_rec_height.csv"
+
+path_ENERGY_tp2 = "datasets/ENERGY/coords/consumption_matrix/energy_consumption_tp2_mW.csv"
+path_ENERGY_tp2_gateway = "datasets/ENERGY/coords/consumption_matrix/energy_consumption_tp2_mW_gate_rec.csv"
+path_ENERGY_tp2_receiver = "datasets/ENERGY/coords/consumption_matrix/energy_consumption_tp2_mW_rec.csv"
+
 path_RIPE_ATLAS_filtered = "datasets/RIPEAtlas/19062023/time-0_2d.csv"
 path_RIPE_ATLAS_filtered_RTT = "datasets/RIPEAtlas/19062023/rtt_time-0.csv"
 
@@ -54,6 +71,7 @@ def add_capacity_columns(df, H, max_capacity, c_capacity, size):
             df[col] = pd.Series(slot_list, dtype="int")
             df["capacity_" + str(i)] = df[col] / df[col].sum() * max_capacity
 
+            x = df[col]
             df[col] = np.ceil(df[col]).astype("int")
             df.at[0, col] = c_capacity
             slot_columns.append(col)
@@ -71,6 +89,26 @@ def rtt_ripe_atlas(path=path_RIPE_ATLAS_RTT):
 
 def coords_fit(path=path_FIT):
     df = pd.read_csv(path, header=None, names=["x", "y"])
+    return df
+
+
+def coords_fit_energy(path=path_FIT_COORDS_2D):
+    df = pd.read_csv(path, sep=",", header=None, names=["x", "y"])
+    return df
+
+
+def energy_fit(path=path_FIT_ENERGY):
+    df = pd.read_csv(path, header=None, skiprows=1)
+    return df
+
+
+def coords_fit_energy_tp2(path=path_ENERGY_COORDS_tp2_classic):
+    df = pd.read_csv(path, sep=",", header=None, names=["x", "y"])
+    return df
+
+
+def energy_fit_tp2(path=path_ENERGY_tp2):
+    df = pd.read_csv(path, header=None, skiprows=1)
     return df
 
 
@@ -113,7 +151,9 @@ def get_coords_dict():
         "planetlab": coords_PLANETLAB(),
         "king": coords_KING(),
         "fit": coords_fit(),
-        "atlas": coords_ripe_atlas()
+        "atlas": coords_ripe_atlas(),
+        "energy": coords_fit_energy(),
+        "energy_tp2": coords_fit_energy_tp2()
     }
     return out
 
