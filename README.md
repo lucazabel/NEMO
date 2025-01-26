@@ -23,6 +23,8 @@ The repository contains two projects:
         - Experiments on the PlanetLab dataset
     - RIPEAtlas.ipynb
         - Experiments on the RIPE Atlas dataset
+    - FIT_energy_tp2.ipynb
+        - Experiments on energy consumption on the FIT iot lab
 - Jupyter notebooks with additional plots of conducted experiments:
     - NesDeploymentsEval: Contain the plots for the End-to-end performance evaluation of NEMO in NebulaStream
     - Heatmaps: Contain heatmaps about latency statistics of the implemented approach for the tested topologies
